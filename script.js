@@ -41,16 +41,16 @@ function pressArrowKeys(Event){
 //            x+=10;
 //            break;
 //    }
-    if(Event.keyCode==38){
+    if(Event.keyCode==38|| Event.keyCode==87){
         Up=true;
     }
-    if(Event.keyCode==40){
+    if(Event.keyCode==40|| Event.keyCode==83){
         Down=true;
     }
-    if(Event.keyCode==37){
+    if(Event.keyCode==37|| Event.keyCode==65){
         Left=true;
     }
-    if(Event.keyCode==39){
+    if(Event.keyCode==39|| Event.keyCode==68){
         Right=true;
     }
     //
