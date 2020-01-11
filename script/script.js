@@ -3,7 +3,8 @@ var ctx = canvas.getContext("2d");
 // position where the frame will be draw
 var character = new Image();
 character.src = "images/reddragon.png";
-
+var bg= new Image();
+bg.src="images/map1.jpg";
 
 var sheetWidth = 699;
 var sheetHeight = 105;
@@ -21,12 +22,13 @@ var srcX;
 var srcY=0;
 
 var currentFrame = 0;
+var prex,prey;
 
 // Process Moving
 document.addEventListener("keydown",pressArrowKeys,true);
 function pressArrowKeys(Event){
     var Up,Down,Left,Right;
-    var prex=x,prey=y;
+    //ctx.clearRect(x,y,width,height);
 //    switch(Event.keyCode){
 //        case 38:
 //            y-=30;
@@ -41,6 +43,8 @@ function pressArrowKeys(Event){
 //            x+=10;
 //            break;
 //    }
+    prex=x;
+    prey=y;
     if(Event.keyCode==38|| Event.keyCode==87){
         Up=true;
     }
@@ -55,32 +59,28 @@ function pressArrowKeys(Event){
     }
     //
     if(Up==true){
-        y-=30;
+        y-=20;
     }
     if(Down==true){
         y+=20;
     }
     if(Left==true){
-        x-=10;
+        x-=20;
     }
     if(Right==true){
-        x+=10;
+        x+=20;
     }
-     ctx.clearRect(prex,prey,width,height);
+    drawImage();
 }
-//void KeyPressed(){
-//    if(Event.keyCode==38) Up=true;
-//    if(Event.keyCode==40 )Down=true;
-//    if(Event.keyCode==37) Left=true;
-//    if(Event.keyCode==39) Right=true;
+
+//function keyRealeased(){
+//    Up=false;
+//    Down=false;
+//    Left=false;
+//    Right=false;
 //}
-function keyRealeased(){
-    Up=false;
-    Down=false;
-    Left=false;
-    Right=false;
-}
 //End
+
 function updateFrame() {
     currentFrame=currentFrame+1;
     currentFrame = currentFrame % frameCount;
@@ -91,12 +91,14 @@ function updateFrame() {
 
 function drawImage() {
     updateFrame();
+     ctx.clearRect(prex,prey,width,height);
     if(y+height>=canvas.height){
         y=canvas.height-height;
     }
     else if(y<=0){
        y=0;
-    };
+    }
+    
     if(x<=0){
         x=0;
     }
@@ -105,9 +107,9 @@ function drawImage() {
         x=canvas.width-width;
     }
     ctx.drawImage(character,srcX,srcY,width,height,x,y,width,height);
+    //requestAnimationFrame(drawImage);
 }
-
-// sleep
+//// sleep
 setInterval(function(){
     drawImage();
 },100);

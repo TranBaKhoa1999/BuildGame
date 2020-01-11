@@ -4,10 +4,18 @@
     <head>
         <meta charset="utf-8">
         <title>Game</title>
-		<link rel="icon" href="Images/favicon.ico">
+		<link rel="icon" href="images/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 	</head>
     <body>
-        <canvas id="canvas" width="1500" height="500" style=""></canvas>
-        <script src="script.js"></script>
+        <canvas id="canvas" width="1500" height="550" style="top:0; left:0;">
+        </canvas>
+        <button class="btn" style="position: absolute;left: 10px;top:10px" onclick="playormute()"><i id="show" class="fa fa-volume-mute" aria-hidden="true" ></i></button>
     </body>
+        <script src="script/chooseCharacter.js"></script>
 </html>
