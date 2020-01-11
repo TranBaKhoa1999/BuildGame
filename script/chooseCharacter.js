@@ -22,6 +22,6 @@ ctx.fillText("Press Enter to start!!",canvas.width/2,canvas.height/2);
 document.addEventListener("keyup",gameStart);
 function gameStart(event){
     if(event.keyCode==13){
-        window.location.href="game.html?red=true";
+        window.location.href="./game.html?red=true";
     }
 }
