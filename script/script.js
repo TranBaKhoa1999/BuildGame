@@ -5,6 +5,8 @@ var character = new Image();
 character.src = "images/reddragon.png";
 var bg= new Image();
 bg.src="images/map1.jpg";
+var bullet = new Image();
+bullet.src="images/fire1.png";
 
 var sheetWidth = 699;
 var sheetHeight = 105;
@@ -24,6 +26,20 @@ var srcY=0;
 var currentFrame = 0;
 var prex,prey;
 
+var bulletShow = [];
+//bulletShow[0]={
+//    xBullet : x+width,
+//    yBullet : (canvas.height-height)/2+20
+//};
+document.addEventListener("keyup",fire);
+function fire(event){
+    if(event.keyCode==32|| event.keyCode==0){
+        bulletShow.push({
+           xBullet:x+width,
+            yBullet:y+20
+        });
+    }
+}
 // Process Moving
 document.addEventListener("keydown",pressArrowKeys,true);
 function pressArrowKeys(Event){
@@ -80,7 +96,6 @@ function pressArrowKeys(Event){
 //    Right=false;
 //}
 //End
-
 function updateFrame() {
     currentFrame=currentFrame+1;
     currentFrame = currentFrame % frameCount;
@@ -91,6 +106,11 @@ function updateFrame() {
 
 function drawImage() {
     updateFrame();
+    ctx.drawImage(bg,0,0);
+    for(var i =0 ; i<bulletShow.length;i++){
+            ctx.drawImage(bullet,bulletShow[i].xBullet,bulletShow[i].yBullet);
+        bulletShow[i].xBullet+=10;
+    }
      ctx.clearRect(prex,prey,width,height);
     if(y+height>=canvas.height){
         y=canvas.height-height;
@@ -112,4 +132,4 @@ function drawImage() {
 //// sleep
 setInterval(function(){
     drawImage();
-},100);
+},70);
