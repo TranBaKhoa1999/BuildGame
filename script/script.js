@@ -1,12 +1,35 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
+
+//get param from URL to determine which character
+var urlParams = new URLSearchParams(window.location.search);
+var link="";
+if(urlParams.has('red')==true){
+    link="images/reddragon.png";
+}
+else if(urlParams.has('blue')==true){
+    link="images/bluedragon.png";
+}
+else if(urlParams.has('white')==true){
+    link="images/whitedragon.png";
+}
+else if(urlParams.has('toxic')==true){
+    link="images/toxicdragon.png";
+}
+else if(urlParams.has('machine')==true){
+    link="images/machinedragon.png";
+}
+else{
+    link="images/reddragon.png";
+}
+
 // position where the frame will be draw
 var character = new Image();
-character.src = "images/reddragon.png";
+character.src = link;
 var bg= new Image();
 bg.src="images/map1.jpg";
 var bullet = new Image();
-bullet.src="images/fire1.png";
+bullet.src="images/fire.png";
 
 var sheetWidth = 699;
 var sheetHeight = 105;
