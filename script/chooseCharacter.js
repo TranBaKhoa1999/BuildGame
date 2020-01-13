@@ -37,42 +37,42 @@ var width=93;
 var height=76;
 var character=[];
 character[0]={
-    link:"images/redavt.png",
+    link:"images/redavt.jpg",
     x:(canvas.width-width)/2-width,
     y:(canvas.height-height)/2-100,
     href:"./game.html?white=true",
     hover:true
 };
 character[1]={
-    link:"images/redavt.png",
+    link:"images/redavt.jpg",
     x:character[0].x+width,
     y:character[0].y,
     href:"./game.html?white=true",
     hover:false
 };
 character[2]={
-    link:"images/redavt.png",
+    link:"images/redavt.jpg",
     x:character[1].x+width,
     y:character[0].y,
     href:"./game.html?red=true",
     hover:false
 };
 character[3]={
-    link:"images/redavt.png",
+    link:"images/redavt.jpg",
     x:character[0].x,
     y:character[0].y+height,
     href:"./game.html?blue=true",
     hover:false
 };
 character[4]={
-    link:"images/redavt.png",
+    link:"images/redavt.jpg",
     x:character[3].x+width,
     y:character[3].y,
     href:"./game.html?machine=true",
     hover:false
 };
 character[5]={
-    link:"images/redavt.png",
+    link:"images/redavt.jpg",
     x:character[4].x+width,
     y:character[3].y,
     href:"./game.html?toxic=true",
