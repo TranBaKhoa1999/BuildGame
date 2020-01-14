@@ -33,20 +33,31 @@ bullet.src="images/fire.png";
 
 var sheetWidth = 699;
 var sheetHeight = 105;
+var sheetFlyEnemyWidth = 400;
+var sheetFlyEnemyHeight = 81;
+
 
 var frameCount = 7;
 var frameCol = 1;
+var frameCountFlyEnemy=4;
+var frameColFlyEnemy=1;
 
 
 var width = sheetWidth / frameCount;
 var height = sheetHeight / frameCol;
+var flyEnemyWidth=sheetFlyEnemyWidth/frameCountFlyEnemy;
+var flyEnemyHeight=sheetFlyEnemyHeight/frameColFlyEnemy;
 
 var x = 0;
 var y = (canvas.height-height)/2;
+
 var srcX;
 var srcY=0;
+var flyEnemysrcX;
+var flyEnemysrcY=0;
 
 var currentFrame = 0;
+var flyEnemyCurrentFrame=0;
 var prex,prey;
 
 var bulletShow = [];
@@ -54,6 +65,14 @@ var bulletShow = [];
 //    xBullet : x+width,
 //    yBullet : (canvas.height-height)/2+20
 //};
+var enemy= [];
+enemy[0]={
+    link:"images/flyenemy.png",
+    hp:100,
+    x:canvas.width-flyEnemyWidth,
+    y:100,
+    height:flyEnemyHeight
+};
 document.addEventListener("keyup",fire);
 function fire(event){
     if(event.keyCode==32|| event.keyCode==0){
@@ -63,6 +82,7 @@ function fire(event){
         });
     }
 }
+
 // Process Moving
 document.addEventListener("keydown",pressArrowKeys,true);
 function pressArrowKeys(Event){
@@ -122,19 +142,49 @@ function pressArrowKeys(Event){
 function updateFrame() {
     currentFrame=currentFrame+1;
     currentFrame = currentFrame % frameCount;
-    ctx.clearRect(x,y,width,height);
+    flyEnemyCurrentFrame=flyEnemyCurrentFrame+1;
+    flyEnemyCurrentFrame=flyEnemyCurrentFrame%frameCountFlyEnemy;
+    
+    //ctx.clearRect(x,y,width,height);
     srcX = currentFrame * width;
     srcY =0;
+    flyEnemysrcX=flyEnemyCurrentFrame*flyEnemyWidth;
+    flyEnemysrcY=0;
 }
 
 function drawImage() {
     updateFrame();
     ctx.drawImage(bg,0,0);
     for(var i =0 ; i<bulletShow.length;i++){
-            ctx.drawImage(bullet,bulletShow[i].xBullet,bulletShow[i].yBullet);
-        bulletShow[i].xBullet+=10;
+        for(var k =0;k<enemy.length;k++){
+            if(bulletShow[i].xBullet>=enemy[k].x && (bulletShow[i].yBullet>=enemy[k].y && bulletShow[i].yBullet<=enemy[k].y+enemy[k].height) ){
+               enemy[k].hp-=10;
+                bulletShow.splice(i,1);
+               }
+           else{
+                ctx.drawImage(bullet,bulletShow[i].xBullet,bulletShow[i].yBullet);
+                bulletShow[i].xBullet+=10;
+               }
+        }
+        if(enemy.length==0){
+                ctx.drawImage(bullet,bulletShow[i].xBullet,bulletShow[i].yBullet);
+                bulletShow[i].xBullet+=10;
+        }
     }
-     ctx.clearRect(prex,prey,width,height);
+    for(var i =0;i<enemy.length;i++){
+       if(enemy[i].hp>0){
+           var enemyShow = new Image();
+           enemyShow.src=enemy[i].link;
+           ctx.drawImage(enemyShow,flyEnemysrcX,flyEnemysrcY,flyEnemyWidth,flyEnemyHeight,enemy[i].x,enemy[i].y,flyEnemyWidth,flyEnemyHeight);                    
+            ctx.fillStyle="red";               
+            ctx.fillRect(enemy[i].x,enemy[i].y+flyEnemyHeight,enemy[i].hp,10);
+            enemy[i].x-=3;                      
+       }
+        else{
+            enemy.splice(i,1);
+        }
+    }
+     //ctx.clearRect(prex,prey,width,height);
     if(y+height>=canvas.height){
         y=canvas.height-height;
     }
@@ -156,3 +206,14 @@ function drawImage() {
 setInterval(function(){
     drawImage();
 },70);
+function addEnemy(){
+    var flag =  Math.floor(Math.random()*2);
+    enemy.push({
+        link:flag==1?"images/walkenemy.png":"images/flyenemy.png",
+        hp:100,
+        x:canvas.width-flyEnemyWidth,
+        y:flag==1 ?canvas.height-height:Math.floor(Math.random()*canvas.height-height),
+        height:flyEnemyHeight
+    });
+}
+setInterval(addEnemy,5000);
