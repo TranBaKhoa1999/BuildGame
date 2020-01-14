@@ -157,7 +157,7 @@ function drawImage() {
     ctx.drawImage(bg,0,0);
     for(var i =0 ; i<bulletShow.length;i++){
         for(var k =0;k<enemy.length;k++){
-            if(bulletShow[i].xBullet>=enemy[k].x && (bulletShow[i].yBullet>=enemy[k].y && bulletShow[i].yBullet<=enemy[k].y+enemy[k].height) ){
+            if( (bulletShow[i].xBullet>=enemy[k].x) && (bulletShow[i].yBullet>=enemy[k].y && bulletShow[i].yBullet<=enemy[k].y+enemy[k].height) && x<= enemy[k].x ){
                enemy[k].hp-=10;
                 bulletShow.splice(i,1);
                }
@@ -172,6 +172,7 @@ function drawImage() {
         }
     }
     for(var i =0;i<enemy.length;i++){
+        
        if(enemy[i].hp>0){
            var enemyShow = new Image();
            enemyShow.src=enemy[i].link;
@@ -181,6 +182,9 @@ function drawImage() {
             enemy[i].x-=3;                      
        }
         else{
+            enemy.splice(i,1);
+        }
+        if(enemy[i].x<=0){
             enemy.splice(i,1);
         }
     }
@@ -202,18 +206,17 @@ function drawImage() {
     ctx.drawImage(character,srcX,srcY,width,height,x,y,width,height);
     //requestAnimationFrame(drawImage);
 }
-//// sleep
-setInterval(function(){
-    drawImage();
-},70);
+//// sleep;
+setInterval(drawImage,70);
 function addEnemy(){
     var flag =  Math.floor(Math.random()*2);
     enemy.push({
         link:flag==1?"images/walkenemy.png":"images/flyenemy.png",
         hp:100,
         x:canvas.width-flyEnemyWidth,
-        y:flag==1 ?canvas.height-height:Math.floor(Math.random()*canvas.height-height),
-        height:flyEnemyHeight
+        height:flyEnemyHeight,
+        y:flag==1 ?canvas.height-height:Math.floor(Math.random()*canvas.height-this.height)+this.height
+        
     });
 }
 setInterval(addEnemy,5000);
