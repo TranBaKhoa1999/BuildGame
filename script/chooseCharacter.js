@@ -15,9 +15,6 @@ function playormute(){
         document.getElementById("show").className="fa fa-volume-mute";
     }
 }
-var bg = new Image();
-bg.src="images/redavt.png";
-
 ctx.font = "30px Comic Sans MS";
 ctx.fillStyle = "red";
 ctx.textAlign = "center";
