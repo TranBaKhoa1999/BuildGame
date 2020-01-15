@@ -28,7 +28,7 @@ else if(urlParams.has('machine')==true){
 }
 else{
     link="images/reddragon.png";
-    linkbullet="images/bluefire.png";
+    linkbullet="images/fire.png";
 }
 
 // position where the frame will be draw
