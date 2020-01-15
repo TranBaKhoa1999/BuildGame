@@ -28,6 +28,8 @@ var character = new Image();
 character.src = link;
 var bg= new Image();
 bg.src="images/map1.jpg";
+var land = new Image();
+land.src="images/land.jpg";
 var bullet = new Image();
 bullet.src="images/fire.png";
 
@@ -70,7 +72,7 @@ enemy[0]={
     link:"images/flyenemy.png",
     hp:100,
     x:canvas.width-flyEnemyWidth,
-    y:100,
+    y:Math.floor(Math.random() * (canvas.height-flyEnemyHeight*2)),
     height:flyEnemyHeight
 };
 document.addEventListener("keyup",fire);
@@ -155,6 +157,7 @@ function updateFrame() {
 function drawImage() {
     updateFrame();
     ctx.drawImage(bg,0,0);
+    ctx.drawImage(land,0,canvas.height-70);
     for(var i =0 ; i<bulletShow.length;i++){
         for(var k =0;k<enemy.length;k++){
             if( (bulletShow[i].xBullet>=enemy[k].x) && (bulletShow[i].yBullet>=enemy[k].y && bulletShow[i].yBullet<=enemy[k].y+enemy[k].height) && x<= enemy[k].x ){
@@ -215,7 +218,7 @@ function addEnemy(){
         hp:100,
         x:canvas.width-flyEnemyWidth,
         height:flyEnemyHeight,
-        y:flag==1 ?canvas.height-height:Math.floor(Math.random()*canvas.height-this.height)+this.height
+        y:flag==1 ?canvas.height-height:Math.floor(Math.random() * (canvas.height-flyEnemyHeight*2))
         
     });
 }
