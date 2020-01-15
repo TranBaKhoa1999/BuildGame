@@ -4,23 +4,31 @@ var ctx = canvas.getContext("2d");
 //get param from URL to determine which character
 var urlParams = new URLSearchParams(window.location.search);
 var link="";
+var linkbullet="";
+var bulletHeight;
 if(urlParams.has('red')==true){
     link="images/reddragon.png";
+    linkbullet="images/fire.png";
 }
 else if(urlParams.has('blue')==true){
     link="images/bluedragon.png";
+    linkbullet="images/bluefire.png";
 }
 else if(urlParams.has('white')==true){
     link="images/whitedragon.png";
+    linkbullet="images/wind2.png";
 }
 else if(urlParams.has('toxic')==true){
     link="images/toxicdragon.png";
+    linkbullet="images/bluefire.png";
 }
 else if(urlParams.has('machine')==true){
     link="images/machinedragon.png";
+    linkbullet="images/bluefire.png";
 }
 else{
     link="images/reddragon.png";
+    linkbullet="images/bluefire.png";
 }
 
 // position where the frame will be draw
@@ -31,7 +39,8 @@ bg.src="images/map1.jpg";
 var land = new Image();
 land.src="images/land.jpg";
 var bullet = new Image();
-bullet.src="images/fire.png";
+bullet.src=linkbullet;
+bulletHeight=bullet.height;
 
 var sheetWidth = 699;
 var sheetHeight = 105;
@@ -63,17 +72,16 @@ var flyEnemyCurrentFrame=0;
 var prex,prey;
 
 var bulletShow = [];
-//bulletShow[0]={
-//    xBullet : x+width,
-//    yBullet : (canvas.height-height)/2+20
-//};
 var enemy= [];
 enemy[0]={
     link:"images/flyenemy.png",
     hp:100,
     x:canvas.width-flyEnemyWidth,
     y:Math.floor(Math.random() * (canvas.height-flyEnemyHeight*2)),
-    height:flyEnemyHeight
+    height:flyEnemyHeight,
+    slow:false,
+    burn:false,
+    stackCC:30
 };
 document.addEventListener("keyup",fire);
 function fire(event){
@@ -160,9 +168,28 @@ function drawImage() {
     ctx.drawImage(land,0,canvas.height-70);
     for(var i =0 ; i<bulletShow.length;i++){
         for(var k =0;k<enemy.length;k++){
-            if( (bulletShow[i].xBullet>=enemy[k].x) && (bulletShow[i].yBullet>=enemy[k].y && bulletShow[i].yBullet<=enemy[k].y+enemy[k].height) && x<= enemy[k].x ){
-               enemy[k].hp-=10;
-                bulletShow.splice(i,1);
+            if( (bulletShow[i].xBullet>=enemy[k].x)&&(bulletShow[i].xBullet<=enemy[k].x+width) && (bulletShow[i].yBullet>=enemy[k].y && bulletShow[i].yBullet<=enemy[k].y+enemy[k].height) && x<= enemy[k].x ){
+                if(linkbullet=="images/wind2.png"){ // gió
+                    enemy[k].hp-=10;
+                    enemy[k].x+=20;
+                     bulletShow.splice(i,1);
+                }
+                else if(linkbullet=="images/bluefire.png"){ // băng
+                    enemy[k].slow=true;
+                    enemy[k].hp-=10;
+                    enemy[k].stackCC=50;
+                    bulletShow.splice(i,1);
+                }
+                else if(linkbullet=="images/fire.png"){ // hỏa
+                    bulletShow.splice(i,1);
+                    enemy[k].burn=true;
+                    enemy[k].hp-=7;
+                    enemy[k].stackCC=15;
+                }
+                else{
+                     enemy[k].hp-=10;
+                     bulletShow.splice(i,1);
+                }
                }
            else{
                 ctx.drawImage(bullet,bulletShow[i].xBullet,bulletShow[i].yBullet);
@@ -182,7 +209,18 @@ function drawImage() {
            ctx.drawImage(enemyShow,flyEnemysrcX,flyEnemysrcY,flyEnemyWidth,flyEnemyHeight,enemy[i].x,enemy[i].y,flyEnemyWidth,flyEnemyHeight);                    
             ctx.fillStyle="red";               
             ctx.fillRect(enemy[i].x,enemy[i].y+flyEnemyHeight,enemy[i].hp,10);
-            enemy[i].x-=3;                      
+           if(enemy[i].slow==true && enemy[i].stackCC>=0){
+               enemy[i].x-=1;
+               enemy[i].stackCC-=0.5;
+               
+           }        
+           else{
+               enemy[i].x-=3;
+           }
+           if(enemy[i].burn==true && enemy[i].stackCC>=0){
+              enemy[i].hp-=1.5;
+               enemy[i].stackCC-=1;
+            }
        }
         else{
             enemy.splice(i,1);
@@ -218,7 +256,10 @@ function addEnemy(){
         hp:100,
         x:canvas.width-flyEnemyWidth,
         height:flyEnemyHeight,
-        y:flag==1 ?canvas.height-height:Math.floor(Math.random() * (canvas.height-flyEnemyHeight*2))
+        y:flag==1 ?canvas.height-height:Math.floor(Math.random() * (canvas.height-flyEnemyHeight*2)),
+        slow:false,
+        burn:false,
+        stackCC:30
         
     });
 }
