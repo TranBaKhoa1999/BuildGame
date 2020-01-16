@@ -3,18 +3,6 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var ctx1 = canvas.getContext("2d");
 var choosedCharacter=0;
-var soundTrack = new Audio();
-soundTrack.src="sounds/soundtrack.mp3";
-function playormute(){
-    if(soundTrack.paused){
-         soundTrack.play();
-        document.getElementById("show").className="fa fa-volume-up";
-     }
-    else{
-        soundTrack.pause();
-        document.getElementById("show").className="fa fa-volume-mute";
-    }
-}
 ctx.font = "30px Comic Sans MS";
 ctx.fillStyle = "red";
 ctx.textAlign = "center";
@@ -38,48 +26,51 @@ character[0]={
     x:(canvas.width-width)/2-width,
     y:(canvas.height-height)/2-100,
     href:"./game.html?white=true",
-    hover:true
+    hover:true,
+    showoff:"images/showoff/whitedragon.png"
 };
 character[1]={
     link:"images/redavt.jpg",
     x:character[0].x+width,
     y:character[0].y,
     href:"./game.html?white=true",
-    hover:false
+    hover:false,
+    showoff:"images/showoff/whitedragon.png"
 };
 character[2]={
     link:"images/redavt.jpg",
     x:character[1].x+width,
     y:character[0].y,
     href:"./game.html?red=true",
-    hover:false
+    hover:false,
+    showoff:"images/showoff/reddragon.png"
 };
 character[3]={
     link:"images/redavt.jpg",
     x:character[0].x,
     y:character[0].y+height,
     href:"./game.html?blue=true",
-    hover:false
+    hover:false,
+    showoff:"images/showoff/bluedragon.png"
 };
 character[4]={
     link:"images/redavt.jpg",
     x:character[3].x+width,
     y:character[3].y,
     href:"./game.html?machine=true",
-    hover:false
+    hover:false,
+    showoff:"images/showoff/machinedragon.jpg"
 };
 character[5]={
     link:"images/redavt.jpg",
     x:character[4].x+width,
     y:character[3].y,
     href:"./game.html?toxic=true",
-    hover:false
+    hover:false,
+    showoff:"images/showoff/toxicdragon.jpg"
 };
 
 //event
-        var hoverLink = ""; // Href of the link which cursor points at
-
-        // Draw the link
     function update(){
         for(var i=0;i<character.length;i++){
             character[i].hover=false;
@@ -154,6 +145,9 @@ function drawImage(){
         img.src=character[i].link;
         ctx.drawImage(img,character[i].x,character[i].y);
         if(character[i].hover==true){
+                var showoff = new Image();
+        showoff.src=character[i].showoff;
+        ctx.drawImage(showoff,canvas.width-showoff.width-100,20);
             ctx.strokeRect(character[i].x,character[i].y,width,height);
         }
     }

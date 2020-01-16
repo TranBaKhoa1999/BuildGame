@@ -31,6 +31,17 @@ else{
     linkbullet="images/fire.png";
 }
 
+//audio
+var   enemyDeadSound = new Audio();
+enemyDeadSound.src="sounds/enemydead.mp3";
+var shootingSound= new Audio();
+shootingSound.src="sounds/shoot.mp3";
+
+//effect img
+var slowed= new Image();
+slowed.src="images/effect/slowed.png";
+var burned = new Image();
+burned.src="images/effect/burn.png";
 // position where the frame will be draw
 var character = new Image();
 character.src = link;
@@ -79,6 +90,7 @@ enemy[0]={
     x:canvas.width-flyEnemyWidth,
     y:Math.floor(Math.random() * (canvas.height-flyEnemyHeight*2)),
     height:flyEnemyHeight,
+    width:flyEnemyWidth,
     slow:false,
     burn:false,
     stackCC:30
@@ -90,6 +102,7 @@ function fire(event){
            xBullet:x+width,
             yBullet:y+20
         });
+    //shootingSound.play();
     }
 }
 
@@ -211,6 +224,7 @@ function drawImage() {
             ctx.fillRect(enemy[i].x,enemy[i].y+flyEnemyHeight,enemy[i].hp,10);
            if(enemy[i].slow==true && enemy[i].stackCC>=0){
                enemy[i].x-=1;
+                ctx.drawImage(slowed,(enemy[i].x+enemy[i].width/2-3),enemy[i].y-30);
                enemy[i].stackCC-=0.5;
                
            }        
@@ -218,11 +232,13 @@ function drawImage() {
                enemy[i].x-=3;
            }
            if(enemy[i].burn==true && enemy[i].stackCC>=0){
+            ctx.drawImage(burned,(enemy[i].x+enemy[i].width/2-3),enemy[i].y-30);
               enemy[i].hp-=1.5;
                enemy[i].stackCC-=1;
             }
        }
         else{
+            enemyDeadSound.play();
             enemy.splice(i,1);
         }
         if(enemy[i].x<=0){
@@ -256,6 +272,7 @@ function addEnemy(){
         hp:100,
         x:canvas.width-flyEnemyWidth,
         height:flyEnemyHeight,
+        width:flyEnemyWidth,
         y:flag==1 ?canvas.height-height:Math.floor(Math.random() * (canvas.height-flyEnemyHeight*2)),
         slow:false,
         burn:false,
