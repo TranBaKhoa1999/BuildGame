@@ -27,7 +27,11 @@ character[0]={
     y:(canvas.height-height)/2-100,
     href:"./game.html?white=true",
     hover:true,
-    showoff:"images/showoff/whitedragon.png"
+    showoff:"images/showoff/whitedragon.png",
+    strength:3,
+    health:5,
+    defend:4,
+    skill:"Death's fire: burning enemy with death's fire ,deal 3% of enemy's hp per second"
 };
 character[1]={
     link:"images/redavt.jpg",
@@ -35,7 +39,11 @@ character[1]={
     y:character[0].y,
     href:"./game.html?white=true",
     hover:false,
-    showoff:"images/showoff/whitedragon.png"
+    showoff:"images/showoff/whitedragon.png",
+    strength:3,
+    health:5,
+    defend:4,
+    skill:"Death's fire: burning enemy with death's fire , deal 3% of enemy's hp per second"
 };
 character[2]={
     link:"images/redavt.jpg",
@@ -43,7 +51,11 @@ character[2]={
     y:character[0].y,
     href:"./game.html?red=true",
     hover:false,
-    showoff:"images/showoff/reddragon.png"
+    showoff:"images/showoff/reddragon.png",
+    strength:5,
+    health:5,
+    defend:2,
+    skill:"Death's fire: burning enemy with death's fire , deal 3% of enemy's hp per second"
 };
 character[3]={
     link:"images/redavt.jpg",
@@ -51,7 +63,11 @@ character[3]={
     y:character[0].y+height,
     href:"./game.html?blue=true",
     hover:false,
-    showoff:"images/showoff/bluedragon.png"
+    showoff:"images/showoff/bluedragon.png",
+    strength:4,
+    health:3,
+    defend:5,
+    skill:"Death's fire: burning enemy with death's fire , deal 3% of enemy's hp per second"
 };
 character[4]={
     link:"images/redavt.jpg",
@@ -59,7 +75,11 @@ character[4]={
     y:character[3].y,
     href:"./game.html?machine=true",
     hover:false,
-    showoff:"images/showoff/machinedragon.jpg"
+    showoff:"images/showoff/machinedragon.jpg",
+    strength:5,
+    health:3,
+    defend:4,
+    skill:"Death's fire: burning enemy with death's fire , deal 3% of enemy's hp per second"
 };
 character[5]={
     link:"images/redavt.jpg",
@@ -67,7 +87,11 @@ character[5]={
     y:character[3].y,
     href:"./game.html?toxic=true",
     hover:false,
-    showoff:"images/showoff/toxicdragon.jpg"
+    showoff:"images/showoff/toxicdragon.jpg",
+    strength:5,
+    health:4,
+    defend:4,
+    skill:"Death's fire: burning enemy with death's fire , deal 3% of enemy's hp per second"
 };
 
 //event
@@ -145,10 +169,34 @@ function drawImage(){
         img.src=character[i].link;
         ctx.drawImage(img,character[i].x,character[i].y);
         if(character[i].hover==true){
-                var showoff = new Image();
-        showoff.src=character[i].showoff;
-        ctx.drawImage(showoff,canvas.width-showoff.width-100,20);
-            ctx.strokeRect(character[i].x,character[i].y,width,height);
+        var showoff = new Image();
+            showoff.src=character[i].showoff;
+            ctx.drawImage(showoff,canvas.width-showoff.width-100,20);
+        var star= new Image();
+            star.src="images/star.png";
+            var starx=canvas.width-showoff.width-100,
+                starStrengthy=30+showoff.height,
+                starHealthy=starStrengthy+star.height+15,
+                starDefendy=starHealthy+star.height+15;
+            for(var c =0 ; c<character[i].strength;c++){
+                ctx.drawImage(star,starx,starStrengthy);
+                starx+=star.width;
+            }
+            ctx.fillText("Strength:",canvas.width-showoff.width-170,starStrengthy+star.height);
+            starx=canvas.width-showoff.width-100;
+            for(var k =0 ; k<character[i].health;k++){
+                ctx.drawImage(star,starx,starHealthy);
+                starx+=star.width;
+            }
+            ctx.fillText("Health:",canvas.width-showoff.width-170,starHealthy+star.height);
+            starx=canvas.width-showoff.width-100;
+            for(var k =0 ; k<character[i].defend;k++){
+                ctx.drawImage(star,starx,starDefendy);
+                starx+=star.width;
+            }
+            ctx.fillText("Defend:",canvas.width-showoff.width-170,starDefendy+star.height);
+            ctx.fillText(character[i].skill,canvas.width-showoff.width-50,starDefendy+star.height*3,700);
+        ctx.strokeRect(character[i].x,character[i].y,width,height);
         }
     }
     requestAnimationFrame(drawImage);
