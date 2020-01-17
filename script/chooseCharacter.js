@@ -31,7 +31,7 @@ character[0]={
     strength:3,
     health:5,
     defend:4,
-    skill:"Death's fire: burning enemy with death's fire ,deal 3% of enemy's hp per second"
+    skill:"Scream of Storm: repel the enemy 10m per shot"
 };
 character[1]={
     link:"images/redavt.jpg",
@@ -43,7 +43,7 @@ character[1]={
     strength:3,
     health:5,
     defend:4,
-    skill:"Death's fire: burning enemy with death's fire , deal 3% of enemy's hp per second"
+    skill:"Scream of Storm: repel the enemy 10m per shot"
 };
 character[2]={
     link:"images/redavt.jpg",
@@ -67,7 +67,7 @@ character[3]={
     strength:4,
     health:3,
     defend:5,
-    skill:"Death's fire: burning enemy with death's fire , deal 3% of enemy's hp per second"
+    skill:"Ice Breath: slow enemies by 90% for 2.7 seconds"
 };
 character[4]={
     link:"images/redavt.jpg",
