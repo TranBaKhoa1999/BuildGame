@@ -79,7 +79,7 @@ character[4]={
     strength:5,
     health:3,
     defend:4,
-    skill:"Death's fire: burning enemy with death's fire , deal 3% of enemy's hp per second"
+    skill:"The Death Ray: shot through enemies with the ray of death , deal 10% hp of them."
 };
 character[5]={
     link:"images/redavt.jpg",

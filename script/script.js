@@ -1,6 +1,7 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
+var score=0;
 //get param from URL to determine which character
 var urlParams = new URLSearchParams(window.location.search);
 var link="";
@@ -24,7 +25,7 @@ else if(urlParams.has('toxic')==true){
 }
 else if(urlParams.has('machine')==true){
     link="images/machinedragon.png";
-    linkbullet="images/bluefire.png";
+    linkbullet="images/lazer.png";
 }
 else{
     link="images/reddragon.png";
@@ -181,7 +182,14 @@ function drawImage() {
     ctx.drawImage(land,0,canvas.height-70);
     for(var i =0 ; i<bulletShow.length;i++){
         for(var k =0;k<enemy.length;k++){
-            if( (bulletShow[i].xBullet>=enemy[k].x)&&(bulletShow[i].xBullet<=enemy[k].x+width) && (bulletShow[i].yBullet>=enemy[k].y && bulletShow[i].yBullet<=enemy[k].y+enemy[k].height) && x<= enemy[k].x ){
+            if(linkbullet=="images/lazer.png"){
+                ctx.drawImage(bullet,bulletShow[i].xBullet,bulletShow[i].yBullet,canvas.width,bullet.height);
+                   if(bulletShow[i].yBullet>=enemy[k].y && bulletShow[i].yBullet<=enemy[k].y+enemy[k].height && x<= enemy[k].x){
+                        enemy[k].hp-=10;
+                   }
+               }
+            else{
+                if( (bulletShow[i].xBullet>=enemy[k].x)&&(bulletShow[i].xBullet<=enemy[k].x+width) && (bulletShow[i].yBullet>=enemy[k].y && bulletShow[i].yBullet<=enemy[k].y+enemy[k].height) && x<= enemy[k].x ){
                 if(linkbullet=="images/wind2.png"){ // gió
                     enemy[k].hp-=10;
                     enemy[k].x+=20;
@@ -207,11 +215,20 @@ function drawImage() {
            else{
                 ctx.drawImage(bullet,bulletShow[i].xBullet,bulletShow[i].yBullet);
                 bulletShow[i].xBullet+=10;
-               }
+           }
+            }
         }
         if(enemy.length==0){
+             if(linkbullet=="images/lazer.png"){
+                ctx.drawImage(bullet,bulletShow[i].xBullet,bulletShow[i].yBullet,canvas.width,bullet.height);
+             }
+            else{
                 ctx.drawImage(bullet,bulletShow[i].xBullet,bulletShow[i].yBullet);
                 bulletShow[i].xBullet+=10;
+            }
+        }
+        if(linkbullet=="images/lazer.png"){
+            bulletShow.splice(i,1);
         }
     }
     for(var i =0;i<enemy.length;i++){
@@ -238,6 +255,7 @@ function drawImage() {
             }
        }
         else{
+            score+=1;
             enemyDeadSound.play();
             enemy.splice(i,1);
         }
@@ -261,6 +279,8 @@ function drawImage() {
         x=canvas.width-width;
     }
     ctx.drawImage(character,srcX,srcY,width,height,x,y,width,height);
+    ctx.font = "30px Comic Sans MS";
+    ctx.fillText("SCORE: "+score,40,canvas.height-10);
     //requestAnimationFrame(drawImage);
 }
 //// sleep;
