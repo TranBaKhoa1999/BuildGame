@@ -22,7 +22,7 @@ var width=93;
 var height=76;
 var character=[];
 character[0]={
-    link:"images/redavt.jpg",
+    link:"images/windavt.png",
     x:(canvas.width-width)/2-width,
     y:(canvas.height-height)/2-100,
     href:"./game.html?white=true",
@@ -34,7 +34,7 @@ character[0]={
     skill:"Scream of Storm: repel the enemy 10m per shot"
 };
 character[1]={
-    link:"images/redavt.jpg",
+    link:"images/windavt.png",
     x:character[0].x+width,
     y:character[0].y,
     href:"./game.html?white=true",
@@ -46,7 +46,7 @@ character[1]={
     skill:"Scream of Storm: repel the enemy 10m per shot"
 };
 character[2]={
-    link:"images/redavt.jpg",
+    link:"images/redavt.png",
     x:character[1].x+width,
     y:character[0].y,
     href:"./game.html?red=true",
@@ -58,7 +58,7 @@ character[2]={
     skill:"Death's fire: burning enemy with death's fire , deal 3% of enemy's hp per second"
 };
 character[3]={
-    link:"images/redavt.jpg",
+    link:"images/icedragonavt.png",
     x:character[0].x,
     y:character[0].y+height,
     href:"./game.html?blue=true",
@@ -70,7 +70,7 @@ character[3]={
     skill:"Ice Breath: slow enemies by 90% for 2.7 seconds"
 };
 character[4]={
-    link:"images/redavt.jpg",
+    link:"images/machineavt.png",
     x:character[3].x+width,
     y:character[3].y,
     href:"./game.html?machine=true",
@@ -82,7 +82,7 @@ character[4]={
     skill:"The Death Ray: shot through enemies with the ray of death , deal 10% hp of them."
 };
 character[5]={
-    link:"images/redavt.jpg",
+    link:"images/toxicavt.png",
     x:character[4].x+width,
     y:character[3].y,
     href:"./game.html?toxic=true",
