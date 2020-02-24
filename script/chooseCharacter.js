@@ -91,7 +91,7 @@ character[5]={
     strength:5,
     health:4,
     defend:4,
-    skill:"Death's fire: burning enemy with death's fire , deal 3% of enemy's hp per second"
+    skill:"Acid X: Shoot enemy by the most toxic acid , deal 0.6* stack HP"
 };
 
 //event
@@ -121,6 +121,8 @@ character[5]={
             if (x >= linkX && x <= (linkX + linkWidth) && y >= linkY && y <= (linkY + linkHeight)){
                 document.body.style.cursor = "pointer";
                 choosedCharacter=i;
+                update();
+                character[choosedCharacter].hover=true;
                 break;
             }
             else {
@@ -138,7 +140,7 @@ canvas.addEventListener("mousemove", on_mousemove, false);
 canvas.addEventListener("click", on_click, false);
 document.addEventListener("keydown",press,true);
     function press(ev){
-        var flag;
+        var flag; 
         for(var i=0;i<character.length;i++){
             if(character[i].hover==true){
                 flag=i;

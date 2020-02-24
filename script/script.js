@@ -21,7 +21,7 @@ else if(urlParams.has('white')==true){
 }
 else if(urlParams.has('toxic')==true){
     link="images/toxicdragon.png";
-    linkbullet="images/bluefire.png";
+    linkbullet="images/doc.png";
 }
 else if(urlParams.has('machine')==true){
     link="images/machinedragon.png";
@@ -43,6 +43,8 @@ var slowed= new Image();
 slowed.src="images/effect/slowed.png";
 var burned = new Image();
 burned.src="images/effect/burn.png";
+var toxiceffect = new Image();
+toxiceffect.src="images/effect/toxic.png";
 // position where the frame will be draw
 var character = new Image();
 character.src = link;
@@ -94,7 +96,8 @@ enemy[0]={
     width:flyEnemyWidth,
     slow:false,
     burn:false,
-    stackCC:30
+    toxic:false,
+    stackCC:0
 };
 document.addEventListener("keyup",fire);
 function fire(event){
@@ -207,6 +210,12 @@ function drawImage() {
                     enemy[k].hp-=7;
                     enemy[k].stackCC=15;
                 }
+                else if(linkbullet=="images/doc.png"){
+                    bulletShow.splice(i,1);
+                    enemy[k].toxic=true;
+                    enemy[k].hp-=6*enemy[k].stackCC;
+                    enemy[k].stackCC+=1;
+                    }
                 else{
                      enemy[k].hp-=10;
                      bulletShow.splice(i,1);
@@ -253,6 +262,10 @@ function drawImage() {
               enemy[i].hp-=1.5;
                enemy[i].stackCC-=1;
             }
+           if(enemy[i].toxic==true && enemy[i].stackCC>=0){
+            ctx.drawImage(toxiceffect,(enemy[i].x-30+enemy[i].width/2-3),enemy[i].y-30);
+            ctx.fillText("x"+enemy[i].stackCC,(enemy[i].x+enemy[i].width/2-3),enemy[i].y-12);
+            }
        }
         else{
             score+=1;
@@ -296,7 +309,8 @@ function addEnemy(){
         y:flag==1 ?canvas.height-height:Math.floor(Math.random() * (canvas.height-flyEnemyHeight*2)),
         slow:false,
         burn:false,
-        stackCC:30
+        toxic:false,
+        stackCC:0
         
     });
 }
