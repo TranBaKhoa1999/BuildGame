@@ -21,7 +21,7 @@ else if(urlParams.has('white')==true){
 }
 else if(urlParams.has('toxic')==true){
     link="images/toxicdragon.png";
-    linkbullet="images/doc.png";
+    linkbullet="images/doc.PNG";
 }
 else if(urlParams.has('machine')==true){
     link="images/machinedragon.png";
@@ -210,16 +210,16 @@ function drawImage() {
                     enemy[k].hp-=7;
                     enemy[k].stackCC=15;
                 }
-                else if(linkbullet=="images/doc.png"){
+                else if(linkbullet=="images/doc.PNG"){
                     bulletShow.splice(i,1);
                     enemy[k].toxic=true;
                     enemy[k].hp-=6*enemy[k].stackCC;
                     enemy[k].stackCC+=1;
                     }
-                else{
-                     enemy[k].hp-=10;
-                     bulletShow.splice(i,1);
-                }
+//                else{
+//                     enemy[k].hp-=10;
+//                     bulletShow.splice(i,1);
+//                }
                }
            else{
                 ctx.drawImage(bullet,bulletShow[i].xBullet,bulletShow[i].yBullet);
